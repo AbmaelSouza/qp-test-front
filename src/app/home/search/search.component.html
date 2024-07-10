@@ -1,0 +1,77 @@
+
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div style="text-align: center;">
+    <h1>Encontre a sua passagem de ônibus!</h1>
+  </div>
+  <table class="custom-form">
+    <tr>
+      <td>
+        <label for="textInput1">Partindo de:</label>
+      </td>
+      <td>
+        <input id="textInput1" type="text" formControlName="textInput1" #textInput1 (input)="onInput($event)"
+               (blur)="dropdown()">
+        <div *ngIf="showDropdown" class="dropdown">
+          <div *ngFor="let option of filteredOptions" (click)="selectOption(option.name)" data-id="{{option.id}}">
+            {{ option.name }}
+          </div>
+        </div>
+        <div *ngIf="filteredOptions.length === 0 && textInput1.value !=''">
+          Sem resultados
+        </div>
+        <div
+          *ngIf="myForm.get('textInput1')?.invalid && (myForm.get('textInput1')?.dirty) && !showDropdown && !(myForm.get('textInput1')?.value === myForm.get('textInput2')?.value) || (myForm.get('textInput1')?.dirty) && !myForm.get('textInput1')?.value">
+          <p class="error-message">Selecione uma Opção</p>
+        </div>
+        <div
+          *ngIf="myForm.get('textInput2')?.value === myForm.get('textInput1')?.value && myForm.get('textInput2')?.value !== ''">
+          <p class="error-message">Os campos são iguais</p>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="textInput2">Indo para:</label>
+      </td>
+      <td>
+        <input id="textInput2" type="text" formControlName="textInput2" #textInput2 (input)="onInput2($event)"
+               (blur)="dropdown()">
+        <div *ngIf="showDropdown2" class="dropdown">
+          <div *ngFor="let option of filteredOptions2" (click)="selectOption2(option.name)" data-id="{{option.id}}">
+            {{ option.name }}
+          </div>
+        </div>
+        <div *ngIf="filteredOptions2.length === 0 && textInput2.value !=''">
+          Sem resultados
+        </div>
+        <div
+          *ngIf="myForm.get('textInput2')?.invalid && (myForm.get('textInput2')?.dirty) && !showDropdown2 && !(myForm.get('textInput2')?.value === myForm.get('textInput1')?.value) || (myForm.get('textInput2')?.dirty) && !myForm.get('textInput2')?.value">
+          <p class="error-message">Selecione uma Opção</p>
+        </div>
+        <div
+          *ngIf="myForm.get('textInput2')?.value === myForm.get('textInput1')?.value && myForm.get('textInput1')?.value !== ''">
+          <p class="error-message">Os campos são iguais</p>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="dateInput1">Data de Ida:</label>
+      </td>
+      <td>
+        <input id="dateInput1" type="date" formControlName="dateInput1" #dateInput1>
+        <div *ngIf="myForm.controls.dateInput1.hasError('invalidDate')">
+          <p class="error-message">A data de ida não pode ser menor que hoje.</p>
+        </div>
+        <div *ngIf="(myForm.get('dateInput1')?.dirty) && !myForm.get('dateInput1')?.value">
+          <p class="error-message">Selecione uma data</p>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align: center;">
+        <button type="submit">Procurar</button>
+      </td>
+    </tr>
+  </table>
+</form>

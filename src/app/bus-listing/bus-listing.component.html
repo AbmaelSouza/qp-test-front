@@ -1,0 +1,30 @@
+<div class="back-link" routerLink="/search">Voltar</div>
+
+<table class="listing-table">
+  <thead>
+  <tr>
+    <th>Empresa</th>
+    <th>De</th>
+    <th>Para</th>
+    <th>Partida</th>
+    <th>Classe do Assento</th>
+    <th>Preço</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of data" class="listing-item">
+    <td>{{ item.company.name }}</td>
+    <td>{{ item.from.name }}</td>
+    <td>{{ item.to.name }}</td>
+    <td>{{ item.departure.time.substr(0, 5) }} &rarr; &nbsp;{{ item.arrival.time.substr(0, 5) }}</td>
+    <td>{{ item.seatClass }}</td>
+    <td>{{ item.price.price.toFixed(2) }}</td>
+    <td>
+      <div class="buy">
+        <input type="button" class="submit" value="SELECIONAR" (click)="selectBus(item)">
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
