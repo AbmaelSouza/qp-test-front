@@ -2,7 +2,9 @@
 <div class="bus-stop">
 <section class="bus">
   <div><img class="front" src="assets/bus/onibus_desktop_frente.png" alt=""></div>
-  <div class="bus-container" [ngClass]="leito? 'leito-cama':''">
+<!--  the style tag is calculating how much columns the seats shall occupy -->
+  <div class="bus-container" [ngClass]="leito? 'leito-cama':''" [style]="{ '--columns': Math.ceil(seatsData.length / 4 + 1) }">
+<!--    the grid and classes are for positioning and availability of seats -->
     <div *ngFor="let seat of seatsData"
          [ngClass]="{'seat': true, 'occupied': seat.occupied, 'available': !seat.occupied}"
          [style.gridColumnStart]="seat.position.x + 1"

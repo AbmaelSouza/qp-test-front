@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2} from '@angular/core';
 import {ApiService} from "../api.service";
 import {Router} from "@angular/router";
 
@@ -20,18 +20,20 @@ interface Seat {
 })
 export class BusComponent {
   seatsData: Seat[] = [];
-  leito:boolean = true;
+  leito: boolean = true;
 
 
-  constructor(private api: ApiService, private router:Router) {
+  constructor(private api: ApiService, private router: Router, private renderer: Renderer2, private elementRef: ElementRef) {
     const data = this.api.getSelectedBusSeatsData();
 
-    if(data.data) {
+    if (data.data) {
       this.seatsData = data.data;
-      this.leito = (data.item.company?.name == 'Expresso do Sul' && (data.item.seatClass === "LEITO CAMA" || data.item.seatClass === "EXECUTIVO"));
-    }else{
+      this.leito = (data.item.seatClass === "LEITO CAMA" || data.item.seatClass === "EXECUTIVO" || data.item.seatClass === "CONVENCIONAL");
+    } else {
       this.router.navigate(['/bus-listing'])
     }
   }
+
+  protected readonly Math = Math;
 
 }
