@@ -23,7 +23,7 @@ export class BusComponent {
   leito: boolean = true;
 
 
-  constructor(private api: ApiService, private router: Router, private renderer: Renderer2, private elementRef: ElementRef) {
+  constructor(private api: ApiService, private router: Router) {
     const data = this.api.getSelectedBusSeatsData();
 
     if (data.data) {
